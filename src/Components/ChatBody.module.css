@@ -1,0 +1,26 @@
+.frame{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.body{
+  margin-top: 10px;
+  width: 1270px;
+  height: 630px;
+  background-color: rgb(75, 75, 75);
+  border: solid 1px white;
+  border-radius: 25px;
+}
+.in{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.in input{
+  background-color: rgb(60, 60, 60);
+  font-size: 17px;
+  padding-left: 7px;
+  width: 550px;
+  height: 35px;
+}
