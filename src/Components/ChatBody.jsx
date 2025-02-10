@@ -29,20 +29,21 @@ function ChatBody() {
       <div className={Chatsty.body}>
         <div className="h-full rounded-xl overflow-y-auto">
           {final &&
-            <p className="text-right text-white mt-3 pr-4 p-1.5 mr-4 ml-120 rounded-lg">{final}</p>
+            <p className="text-right text-md text-emerald bg-white mt-3 pr-4 p-1.5 mr-4 ml-120 rounded-lg">{final}</p>
           }
-          <p className="text-left text-white mr-100 ml-4 p-1.5 mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit nulla atque voluptatibus accusantium est repellat consequuntur repellendus aperiam dolorem. Iusto in ad autem temporibus a molestiae porro facilis libero mollitia.</p>
+          <p className="text-left text-emerald text-lg border-l-4 border-indigo rounded-lg bg-sky mr-100 ml-4 p-1.5 mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit nulla atque voluptatibus accusantium est repellat consequuntur repellendus aperiam dolorem. Iusto in ad autem temporibus a molestiae porro facilis libero mollitia.</p>
         </div>
         <div style={{display: "flex",justifyContent: "center", alignItems: "center", flexDirection: "row"}}>
           <input 
           onKeyDown={handleKeyDown}
             value={ourMsg}
+            placeholder='Ask anything'
             onChange={(e)=>setourMsg(e.target.value)}
-            className="bg-stone-700 mt-3 mb-4 border-2 border-white text-white text-lg rounded-xl block w-170 p-2.5 focus:ring-0 focus:ring-offset-0 outline-none" 
+            className="bg-stone-700 mt-3 mb-4 border-emerald placeholder-stone text-emerald text-lg rounded-xl block w-170 p-2.5 focus:ring-none focus:ring-offset-0 bg-teal outline-none" 
           />
           <button 
             type="button" 
-            className="flex justify-center bg-white hover:bg-gray-300 rounded-lg p-3 h-12 text-2xl w-15 ml-7" 
+            className="flex justify-center bg-cyan text-white hover:bg-cyan-50 rounded-lg p-3 h-12 text-2xl w-15 ml-7" 
             onClick={handleGenerate}>
           <FaArrowCircleUp /></button>
         </div>
