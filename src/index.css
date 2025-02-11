@@ -18,3 +18,16 @@
   --color-cyan: #2E7D32;
   --color-cyan-50 : #388E3C;
 }
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #2d9a0f;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #fe0000;
+}

@@ -1,19 +1,38 @@
 import React, { useState } from 'react'
 import Chatsty from './ChatBody.module.css'
 import { FaArrowCircleUp } from "react-icons/fa"
+import ReactMarkdown from 'react-markdown';
+import axios from 'axios';
 
 function ChatBody() {
 
   const [ourMsg,setourMsg] = useState("");
   const [final,setfinal] = useState("");
+  const [ResponseMsg,setResponseMsg] = useState("");
   
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
+    setResponseMsg("Typing...");
     if (ourMsg.trim() === "") {
-      window.alert("Please enter a message");
+      alert("Please enter a message");
+      return;
     } 
-    else{
-      setfinal(ourMsg);
-      setourMsg("");
+
+    setfinal(ourMsg);
+    setourMsg("");
+
+    try{
+      const response = await axios({
+        url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${import.meta.env.VITE_APP_API_KEY}`,
+        method: "post",
+        data : {
+          "contents": [{ "parts":[{"text": ourMsg}]}],
+        }
+      });
+      setResponseMsg(response.data.candidates[0].content.parts[0].text || 'No response received');
+    }
+    catch(error){
+      console.error('Error : ', error);
+      setResponseMsg('Failed to get a response.');
     }
   };
 
@@ -29,9 +48,11 @@ function ChatBody() {
       <div className={Chatsty.body}>
         <div className="h-full rounded-xl overflow-y-auto">
           {final &&
-            <p className="text-right text-md text-emerald bg-white mt-3 pr-4 p-1.5 mr-4 ml-120 rounded-lg">{final}</p>
+            <p className="text-right text-md text-emerald bg-white mt-3 pr-4 p-1.5 mr-4 ml-120 rounded-lg break-words">{final}</p>
           }
-          <p className="text-left text-emerald text-lg border-l-4 border-indigo rounded-lg bg-sky mr-100 ml-4 p-1.5 mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit nulla atque voluptatibus accusantium est repellat consequuntur repellendus aperiam dolorem. Iusto in ad autem temporibus a molestiae porro facilis libero mollitia.</p>
+          {ResponseMsg &&
+            <ReactMarkdown className="text-left text-emerald text-lg border-l-4 border-indigo rounded-lg bg-sky break-words whitespace-pre-wrap mr-100 ml-4 p-1.5 mt-3">{ResponseMsg}</ReactMarkdown> 
+          }
         </div>
         <div style={{display: "flex",justifyContent: "center", alignItems: "center", flexDirection: "row"}}>
           <input 
