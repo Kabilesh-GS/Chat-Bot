@@ -13,7 +13,7 @@
   /*ai border*/
   --color-indigo: #4c8a4f;
   /*place holder color*/
-  --color-stone : #AAAAAA;
+  --color-stone : #828282;
   /*send button bg*/
   --color-cyan: #2E7D32;
   --color-cyan-50 : #388E3C;
@@ -23,11 +23,12 @@
   width: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #95eba2;
+  margin-top: 20px;
 }
 ::-webkit-scrollbar-thumb {
   background: #2d9a0f;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #fe0000;
+  background: #55b63a;
 }

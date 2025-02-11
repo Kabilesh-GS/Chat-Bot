@@ -11,7 +11,6 @@ function ChatBody() {
   const [ResponseMsg,setResponseMsg] = useState("");
   
   const handleGenerate = async () => {
-    setResponseMsg("Typing...");
     if (ourMsg.trim() === "") {
       alert("Please enter a message");
       return;
@@ -21,6 +20,10 @@ function ChatBody() {
     setourMsg("");
 
     try{
+      document.getElementById('welcomeText').innerHTML = "";
+      document.getElementById('welcomeText').style.marginTop = "0px";
+
+      setResponseMsg("Typing...");
       const response = await axios({
         url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${import.meta.env.VITE_APP_API_KEY}`,
         method: "post",
@@ -46,6 +49,10 @@ function ChatBody() {
   return (
     <div className={Chatsty.frame}>
       <div className={Chatsty.body}>
+        <div id='welcomeText' className="flex justify-center items-center mt-65">
+          <p className={Chatsty.welc}>Hello there!</p>
+          <p className={Chatsty.welcQues}>How can I help you?</p>
+        </div>
         <div className="h-full rounded-xl overflow-y-auto">
           {final &&
             <p className="text-right text-md text-emerald bg-white mt-3 pr-4 p-1.5 mr-4 ml-120 rounded-lg break-words">{final}</p>
