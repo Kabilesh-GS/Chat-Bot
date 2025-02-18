@@ -41,7 +41,12 @@ function ChatBody() {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      handleGenerate();
+      if(e.shiftKey){
+        return;
+      }
+      else{
+        handleGenerate();
+      }
     }
   };
 
@@ -55,19 +60,19 @@ function ChatBody() {
         </div>
         <div className="h-full rounded-xl overflow-y-auto">
           {final &&
-            <p className="text-right text-md text-emerald bg-white mt-3 pr-4 p-1.5 mr-4 ml-120 rounded-lg break-words">{final}</p>
+            <ReactMarkdown className="text-right text-md text-emerald bg-white mt-3 pr-4 p-1.5 mr-4 ml-120 rounded-lg break-words">{final}</ReactMarkdown>
           }
           {ResponseMsg &&
             <ReactMarkdown className="text-left text-emerald text-lg border-l-4 border-indigo rounded-lg bg-sky break-words whitespace-pre-wrap mr-100 ml-4 p-1.5 mt-3">{ResponseMsg}</ReactMarkdown> 
           }
         </div>
         <div style={{display: "flex",justifyContent: "center", alignItems: "center", flexDirection: "row"}}>
-          <input 
+          <textarea
           onKeyDown={handleKeyDown}
             value={ourMsg}
             placeholder='Ask anything'
             onChange={(e)=>setourMsg(e.target.value)}
-            className="bg-stone-700 mt-3 mb-4 border-emerald placeholder-stone text-emerald text-lg rounded-xl block w-170 p-2.5 focus:ring-none focus:ring-offset-0 bg-teal outline-none" 
+            className="bg-stone-700 mt-3 mb-4 resize-none border-emerald placeholder-stone text-emerald text-lg rounded-xl block w-170 p-2.5 focus:ring-none focus:ring-offset-0 bg-teal outline-none" 
           />
           <button 
             type="button" 
