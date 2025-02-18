@@ -59,20 +59,24 @@ function ChatBody() {
           <p className={Chatsty.welcQues}>How can I help you?</p>
         </div>
         <div className="h-full rounded-xl overflow-y-auto">
-          {final &&
-            <ReactMarkdown className="text-right text-md text-emerald bg-white mt-3 pr-4 p-1.5 mr-4 ml-120 rounded-lg break-words">{final}</ReactMarkdown>
-          }
-          {ResponseMsg &&
-            <ReactMarkdown className="text-left text-emerald text-lg border-l-4 border-indigo rounded-lg bg-sky break-words whitespace-pre-wrap mr-100 ml-4 p-1.5 mt-3">{ResponseMsg}</ReactMarkdown> 
-          }
+          {final && (
+            <div className="flex justify-end">
+              <ReactMarkdown className="text-md text-emerald bg-white mt-3 pr-4 p-1.5 mr-4 ml-120 rounded-lg whitespace-pre-wrap break-words">{final}</ReactMarkdown>
+            </div>
+          )}
+          {ResponseMsg && (
+            <div className="flex justify-start">
+              <ReactMarkdown className="text-emerald text-lg border-l-4 border-indigo rounded-lg bg-sky break-words whitespace-pre-wrap mr-100 ml-4 p-1.5 mt-3">{ResponseMsg}</ReactMarkdown> 
+            </div>
+          )}
         </div>
         <div style={{display: "flex",justifyContent: "center", alignItems: "center", flexDirection: "row"}}>
           <textarea
-          onKeyDown={handleKeyDown}
+            onKeyDown={handleKeyDown}
             value={ourMsg}
             placeholder='Ask anything'
             onChange={(e)=>setourMsg(e.target.value)}
-            className="bg-stone-700 mt-3 mb-4 resize-none border-emerald placeholder-stone text-emerald text-lg rounded-xl block w-170 p-2.5 focus:ring-none focus:ring-offset-0 bg-teal outline-none" 
+            className="bg-stone-700 mt-3 mb-4 resize-none border-emerald placeholder-stone text-emerald text-lg rounded-xl block w-170 h-13 p-2.5 focus:ring-none focus:ring-offset-0 bg-teal outline-none" 
           />
           <button 
             type="button" 
