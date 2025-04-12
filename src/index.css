@@ -17,6 +17,7 @@
   /*send button bg*/
   --color-cyan: #2E7D32;
   --color-cyan-50 : #388E3C;
+  --color-red-400 : #ff6467;
 }
 
 ::-webkit-scrollbar {

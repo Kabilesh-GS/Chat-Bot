@@ -12,7 +12,9 @@ function ChatBody() {
   
   const handleGenerate = async () => {
     if (ourMsg.trim() === "") {
-      alert("Please enter a message");
+      const timeoutmsg = document.getElementById('errormsg');
+      timeoutmsg.innerHTML = "Please enter a message";
+      setTimeout(() => {timeoutmsg.innerHTML = ""},5000);
       return;
     } 
 
@@ -57,6 +59,8 @@ function ChatBody() {
         <div id='welcomeText' className="flex justify-center items-center mt-65">
           <p className={Chatsty.welc}>Hello there!</p>
           <p className={Chatsty.welcQues}>How can I help you?</p>
+          &nbsp;
+          <p className='text-red text-sm text-red-400' id='errormsg'></p>
         </div>
         <div className="h-full rounded-xl overflow-y-auto">
           {final && (
