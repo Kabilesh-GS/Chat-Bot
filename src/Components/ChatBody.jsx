@@ -53,6 +53,25 @@ function ChatBody() {
     }
   };
 
+  const cardsData = [
+    {
+      prompt : "Write a code in java to sort an array with minimun time and space complexity",
+      emoji : "🧑‍💻",
+      onclick :  ()=>setourMsg("Write a code in java to sort an array with minimun time and space complexity")
+    },
+    {
+      prompt : "Explain about the concept of big-bang theory and how universe was created",
+      emoji : "🤯",
+      onclick :  ()=>setourMsg("Explain about the concept of big-bang theory and how universe was created")
+    },
+    {
+      prompt : "What is the difference between AI, ML, and Deep Learning?",
+      emoji : "🤖",
+      onclick :  ()=>setourMsg("What is the difference between AI, ML, and Deep Learning?")
+    },
+  ];
+
+  const cardDis = cardsData.map((cardsData,index) => <DefaultPrompt key={index} prompt={cardsData.prompt} emoji={cardsData.emoji} onclick={cardsData.onclick}/>)
 
   return (
     <div className={Chatsty.frame}>
@@ -61,9 +80,7 @@ function ChatBody() {
           <p className={Chatsty.welc}>Hello there!</p>
           <p className={Chatsty.welcQues}>How can I help you?</p>
           <div className={Chatsty.defatutprom}>
-            <DefaultPrompt prompt="Write a code in java to sort an array with minimun time and space complexity" emoji="🧑‍💻"  onClick={()=>setourMsg("Write a code in java to sort an array with minimun time and space complexity")}/>
-            <DefaultPrompt prompt="Explain about the concept of big-bang theory and how universe was created" emoji="🤯" onClick={()=>setourMsg("Explain about the concept of big-bang theory and how universe was created")} />
-            <DefaultPrompt prompt="What is the difference between AI, ML, and Deep Learning?" emoji="🤖" onClick={()=>setourMsg("What is the difference between AI, ML, and Deep Learning?")} />
+            {cardDis}
           </div>
           &nbsp;
           <p className='text-red text-sm text-red-400' id='errormsg'></p>
