@@ -87,17 +87,17 @@ function ChatBody() {
         </div>
         <div className="h-full rounded-xl overflow-y-auto">
           {final && (
-            <div className="flex justify-end">
+            <div className={Chatsty.sender}>
               <ReactMarkdown className="text-md max-w-160 text-end text-emerald bg-white mt-3 px-4 p-1.5 mr-4 ml-auto rounded-lg whitespace-pre-wrap break-words">{final}</ReactMarkdown>
             </div>
           )}
           {ResponseMsg && (
-            <div className="flex justify-start">
+            <div className={Chatsty.ai}>
               <ReactMarkdown className="text-lg max-w-200 text-start text-emerald bg-sky px-3 border-l-4 border-indigo rounded-lg break-words whitespace-pre-wrap ml-4 p-1.5 mt-3">{ResponseMsg}</ReactMarkdown> 
             </div>
           )}
         </div>
-        <div style={{display: "flex",justifyContent: "center", alignItems: "center", flexDirection: "row"}}>
+        <div className={Chatsty.inputcont}>
           <textarea
             onKeyDown={handleKeyDown}
             value={ourMsg}
