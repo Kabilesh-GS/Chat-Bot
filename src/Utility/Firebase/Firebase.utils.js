@@ -3,7 +3,7 @@ import { getAuth,signInWithPopup,GoogleAuthProvider,signOut } from 'firebase/aut
 
 const firebaseConfig = {
   apiKey: "AIzaSyD0piRRe4KqE-1fsLl2PcnfqgSXK4Ie2GE",
-  authDomain: "chat-ft-ai.netlify.app",
+  authDomain: "chat-bot-gemi.firebaseapp.com",
   projectId: "chat-bot-gemi",
   storageBucket: "chat-bot-gemi.firebasestorage.app",
   messagingSenderId: "689960502199",
