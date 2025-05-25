@@ -4,8 +4,10 @@ import { FaArrowCircleUp } from "react-icons/fa"
 import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
 import DefaultPrompt from './DefaultPrompt';
+import {Signout} from '../Utility/Firebase/Firebase.utils';
+import { MdOutlineLogin } from "react-icons/md";
 
-function ChatBody() {
+function ChatBody({Username}) {
 
   const [ourMsg,setourMsg] = useState("");
   const [final,setfinal] = useState("");
@@ -26,7 +28,7 @@ function ChatBody() {
       document.getElementById('welcomeText').innerHTML = "";
       document.getElementById('welcomeText').style.marginTop = "0px";
 
-      setResponseMsg("Typing...");
+      setResponseMsg("Thinking...");
       const response = await axios({
         url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${import.meta.env.VITE_APP_API_KEY}`,
         method: "post",
@@ -70,14 +72,14 @@ function ChatBody() {
       onclick :  ()=>setourMsg("What is the difference between AI, ML, and Deep Learning?")
     },
   ];
-
-  const cardDis = cardsData.map((cardsData,index) => <DefaultPrompt key={index} prompt={cardsData.prompt} emoji={cardsData.emoji} onclick={cardsData.onclick}/>)
+  const cardDis = cardsData.map((cardsData,index) => { return <DefaultPrompt key={index} prompt={cardsData.prompt} emoji={cardsData.emoji} onclick={cardsData.onclick}/> })
 
   return (
     <div className={Chatsty.frame}>
       <div className={Chatsty.body}>
+        <button onClick={Signout} className='cursor-pointer mx-5'><MdOutlineLogin className='text-[25px]'/></button>
         <div id='welcomeText' className={Chatsty.Welcome}>
-          <p className={Chatsty.welc}>Hello there!</p>
+          <p className={Chatsty.welc}>Hello {Username}!</p>
           <p className={Chatsty.welcQues}>How can I help you?</p>
           <div className={Chatsty.defatutprom}>
             {cardDis}
