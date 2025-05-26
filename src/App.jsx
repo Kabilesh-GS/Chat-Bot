@@ -15,7 +15,7 @@ function App() {
   return (
     <div>
       <Header />
-      {user ? <ChatBody Username={user.displayName}/> : <SignIn signIn={signinFun}/>}
+      {user ? <ChatBody Username={user.displayName} ImageURL={user.photoURL}/> : <SignIn signIn={signinFun}/>}
     </div>
   )
 }

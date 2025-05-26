@@ -7,7 +7,7 @@ import DefaultPrompt from './DefaultPrompt';
 import {Signout} from '../Utility/Firebase/Firebase.utils';
 import { MdOutlineLogin } from "react-icons/md";
 
-function ChatBody({Username}) {
+function ChatBody({Username,ImageURL}) {
 
   const [ourMsg,setourMsg] = useState("");
   const [final,setfinal] = useState("");
@@ -76,8 +76,8 @@ function ChatBody({Username}) {
 
   return (
     <div className={Chatsty.frame}>
+      <button onClick={Signout} className='cursor-pointer left-[15px] w-[30px] absolute top-[15px]'><MdOutlineLogin className='text-[25px]' style={{color: '#81c784'}}/></button>
       <div className={Chatsty.body}>
-        <button onClick={Signout} className='cursor-pointer mx-5'><MdOutlineLogin className='text-[25px]'/></button>
         <div id='welcomeText' className={Chatsty.Welcome}>
           <p className={Chatsty.welc}>Hello {Username}!</p>
           <p className={Chatsty.welcQues}>How can I help you?</p>
@@ -90,7 +90,8 @@ function ChatBody({Username}) {
         <div className="h-full rounded-xl overflow-y-auto">
           {final && (
             <div className={Chatsty.sender}>
-              <ReactMarkdown className="text-md max-w-160 text-end text-emerald bg-white mt-3 px-4 p-1.5 mr-4 ml-auto rounded-lg whitespace-pre-wrap break-words">{final}</ReactMarkdown>
+              <ReactMarkdown className="text-md max-w-160 text-end text-emerald bg-white mt-3 px-4 p-1.5 mr-2 ml-auto rounded-lg whitespace-pre-wrap break-words">{final}</ReactMarkdown>
+              <img className='mt-3 mr-2' src={ImageURL} alt="User Avatar" />
             </div>
           )}
           {ResponseMsg && (
