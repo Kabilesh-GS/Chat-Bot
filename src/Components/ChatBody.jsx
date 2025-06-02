@@ -76,7 +76,7 @@ function ChatBody({Username,ImageURL}) {
 
   return (
     <div className={Chatsty.frame}>
-      <button onClick={Signout} className='cursor-pointer left-[15px] w-[30px] absolute top-[15px]'><MdOutlineLogin className='text-[25px]' style={{color: '#81c784'}}/></button>
+      <button onClick={Signout} className='cursor-pointer hover:scale-120 active:scale-90 transition-all duration-100 left-[15px] w-[30px] absolute top-[15px]'><MdOutlineLogin className='text-[25px]' style={{color: '#81c784'}}/></button>
       <div className={Chatsty.body}>
         <div id='welcomeText' className={Chatsty.Welcome}>
           <p className={Chatsty.welc}>Hello {Username}!</p>
