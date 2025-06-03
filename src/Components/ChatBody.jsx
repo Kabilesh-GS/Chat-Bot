@@ -30,7 +30,7 @@ function ChatBody({Username,ImageURL}) {
 
       setResponseMsg("Thinking...");
       const response = await axios({
-        url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${import.meta.env.VITE_APP_API_KEY}`,
+        url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${import.meta.env.VITE_APP_API_KEY}`,
         method: "post",
         data : {
           "contents": [{ "parts":[{"text": ourMsg}]}],
