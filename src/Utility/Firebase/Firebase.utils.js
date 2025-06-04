@@ -3,7 +3,7 @@ import { getFirestore,doc,getDoc,setDoc,collection,serverTimestamp } from 'fireb
 import { getAuth,signInWithPopup,GoogleAuthProvider,signOut } from 'firebase/auth' 
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  apiKey: 'AIzaSyD0piRRe4KqE-1fsLl2PcnfqgSXK4Ie2GE',
   authDomain: "chat-bot-gemi.firebaseapp.com",
   projectId: "chat-bot-gemi",
   storageBucket: "chat-bot-gemi.firebasestorage.app",
