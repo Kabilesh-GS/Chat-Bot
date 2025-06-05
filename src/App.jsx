@@ -3,7 +3,7 @@ import ChatBody from './Components/ChatBody'
 import Header from './Components/Header'
 import {Signin,auth,createCollectionUsers} from './Utility/Firebase/Firebase.utils';
 import {useAuthState} from 'react-firebase-hooks/auth';
-import SignIn from './Components/SignIn';
+import UserLogin from './Components/UserLogin';
 
 function App() {
   const[user] = useAuthState(auth);
@@ -12,9 +12,9 @@ function App() {
     createCollectionUsers(res.user);
   }
   return (
-    <div>
+    <div className='loginPageDiv'>
       <Header />
-      {user ? <ChatBody Username={user.displayName} ImageURL={user.photoURL}/> : <SignIn signIn={signinFun}/>}
+      {user ? <ChatBody Username={user.displayName} ImageURL={user.photoURL}/> : <UserLogin signIn={signinFun}/>}
     </div>
   )
 }

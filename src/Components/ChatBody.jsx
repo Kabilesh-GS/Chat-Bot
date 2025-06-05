@@ -87,7 +87,7 @@ function ChatBody({Username,ImageURL}) {
           &nbsp;
           <p className='text-red text-sm text-red-400' id='errormsg'></p>
         </div>
-        <div className="h-full rounded-xl overflow-y-auto">
+        <div className="rounded-xl overflow-y-auto">
           {final && (
             <div className={Chatsty.sender}>
               <ReactMarkdown className="text-md max-w-160 text-end text-emerald bg-white mt-3 px-4 p-1.5 mr-2 ml-auto rounded-lg whitespace-pre-wrap break-words">{final}</ReactMarkdown>
@@ -96,7 +96,7 @@ function ChatBody({Username,ImageURL}) {
           )}
           {ResponseMsg && (
             <div className={Chatsty.ai}>
-              <ReactMarkdown className="text-lg max-w-200 text-start text-emerald bg-sky px-3 border-l-4 border-indigo rounded-lg break-words whitespace-pre-wrap ml-4 p-1.5 mt-3">{ResponseMsg}</ReactMarkdown> 
+              <ReactMarkdown className="text-lg min-w-auto max-w-250 text-start text-emerald bg-sky px-3 border-l-4 border-indigo rounded-lg break-words whitespace-pre-wrap ml-4 p-1.5 mt-3">{ResponseMsg}</ReactMarkdown> 
             </div>
           )}
         </div>
@@ -106,7 +106,7 @@ function ChatBody({Username,ImageURL}) {
             value={ourMsg}
             placeholder='Ask anything'
             onChange={(e)=>setourMsg(e.target.value)}
-            className="bg-stone-700 mt-3 mb-4 pl-4 resize-none border-emerald placeholder-stone text-emerald text-lg rounded-full block w-170 h-13 p-2.5 focus:ring-none focus:ring-offset-0 bg-teal outline-none" 
+            className="bg-stone-700 mt-2 mb-2 pl-4 resize-none border-emerald placeholder-stone text-emerald text-lg rounded-full block w-170 h-13 p-2.5 focus:ring-none focus:ring-offset-0 bg-teal outline-none" 
           />
           <button 
             type="button" 

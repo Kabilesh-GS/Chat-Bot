@@ -1,4 +1,4 @@
-div{
+.loginPageDiv{
   display: flex;
   flex-direction: column;
 }

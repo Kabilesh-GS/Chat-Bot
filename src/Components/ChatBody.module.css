@@ -1,17 +1,21 @@
 .frame{
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: center; 
+  justify-content: center;
 }
 .inputcont{
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: row;
+    margin-top: auto;
 }
 .body{
   margin-top: 0px;
-  width: 1270px;
+  display: flex;
+  flex-direction: column;
+  max-width: 1470px;
   height: 660px;
   background-image: linear-gradient(to bottom, #81C784, #A5D6A7);
   box-shadow: 0px 0px 25px rgba(255, 255, 255, 0.596);

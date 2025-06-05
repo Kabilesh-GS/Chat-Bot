@@ -1,7 +1,11 @@
+import { useState } from 'react';
 import './SignIn.module.css';
 import GoogleIcon from '../assets/google.svg';
 
-function SignIn({ signIn }) {
+function UserLogin({ signIn }) {
+
+  const[Active,setActive] = useState(true);
+
   return (
     <div style={{ padding: '2rem', borderRadius: '8px' }}>
       <h3 className='text-center text-[30px]'>Sign In to continue</h3>
@@ -14,8 +18,18 @@ function SignIn({ signIn }) {
           <span>Google</span>
         </button>
       </div>
+      <div className='flex items-center justify-center flex-col'>
+        <span>OR</span>
+        <div className='flex'>
+          <input checked={Active} onChange={() => setActive(true)} type='radio' name='sign' className='cursor-pointer bg-grey'/>Sign Up
+          <input name='sign' checked={!Active} type='radio' onChange={() => setActive(false)} className='cursor-pointer'/>Sign In
+        </div>
+        <div>
+          {Active ? 'Sign Up' : 'Sign In'}
+        </div>
+      </div>
     </div>
   );
 }
 
-export default SignIn;
+export default UserLogin;
