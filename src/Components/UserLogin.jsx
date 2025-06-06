@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import './SignIn.module.css';
 import GoogleIcon from '../assets/google.svg';
+import SignUp from './SignUp';
+import SignIn from './SignIn';
 
 function UserLogin({ signIn }) {
 
@@ -25,7 +27,7 @@ function UserLogin({ signIn }) {
           <input name='sign' checked={!Active} type='radio' onChange={() => setActive(false)} className='cursor-pointer'/>Sign In
         </div>
         <div>
-          {Active ? 'Sign Up' : 'Sign In'}
+          {Active ? <SignUp/> : <SignIn/> }
         </div>
       </div>
     </div>

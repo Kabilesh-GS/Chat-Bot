@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Chatsty from './ChatBody.module.css'
 import { FaArrowCircleUp } from "react-icons/fa"
 import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
 import DefaultPrompt from './DefaultPrompt';
-import {Signout} from '../Utility/Firebase/Firebase.utils';
+import {Signout} from '../Utility/Firebase/Firebase.utils';;
 import { MdOutlineLogin } from "react-icons/md";
 
 function ChatBody({Username,ImageURL}) {
