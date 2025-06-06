@@ -1,34 +1,27 @@
 import { useState } from 'react';
 import './SignIn.module.css';
-import GoogleIcon from '../assets/google.svg';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
-
-function UserLogin({ signIn }) {
+import {Signin,auth,createCollectionUsers} from '../Utility/Firebase/Firebase.utils';
+import {useAuthState} from 'react-firebase-hooks/auth';
+  
+function UserLogin() {
 
   const[Active,setActive] = useState(true);
+  const[user] = useAuthState(auth);
+  const signinFun = async () => {
+    const res = await Signin();
+    createCollectionUsers(res.user);
+  }
 
   return (
-    <div style={{ padding: '2rem', borderRadius: '8px' }}>
-      <h3 className='text-center text-[30px]'>Sign In to continue</h3>
-      <div className='flex items-center justify-center'>
-        <button
-          onClick={signIn}
-          className='cursor-pointer w-[200px] active:scale-90 flex gap-2 justify-center p-3 border border-gray-300 transition-all duration-100 rounded-lg mt-4 hover:bg-blue-100 hover:rounded-[20px] transition'
-        >
-          <img src={GoogleIcon} alt="Google" className='w-6 h-6' />
-          <span>Google</span>
-        </button>
+    <div className='flex items-center justify-center flex-col mt-4'>
+      <div className='flex gap-30'>
+        <div><input checked={ Active} onChange={() => setActive(true) } type='radio' name='sign' className='cursor-pointer w-15 mt-2 opacity-0 absolute'/><span>Sign Up</span></div>
+        <div><input checked={!Active} onChange={() => setActive(false)} type='radio' name='sign' className='cursor-pointer w-15 mt-2 opacity-0 absolute'/><span>Sign In</span></div>
       </div>
-      <div className='flex items-center justify-center flex-col'>
-        <span>OR</span>
-        <div className='flex'>
-          <input checked={Active} onChange={() => setActive(true)} type='radio' name='sign' className='cursor-pointer bg-grey'/>Sign Up
-          <input name='sign' checked={!Active} type='radio' onChange={() => setActive(false)} className='cursor-pointer'/>Sign In
-        </div>
-        <div>
-          {Active ? <SignUp/> : <SignIn/> }
-        </div>
+      <div>
+        {Active ? <SignUp/> : <SignIn signIn={signinFun}/> }
       </div>
     </div>
   );

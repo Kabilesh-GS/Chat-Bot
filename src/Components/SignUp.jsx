@@ -39,23 +39,23 @@ function SignUp() {
   }
 
   return (
-    <div className='flex flex-col items-center'>
+    <div className='flex flex-col items-center mt-5'>
       <p>Don't have an account</p>
       <p>Register with your E-mail !</p>
-      <form className='flex flex-col' onSubmit={handleSubmit}>
-        <label>Name</label>
-        <input type='text' required onChange={handleChange} value={displayName} name="displayName"/>
+      <form className='flex flex-col mt-5 w-70' onSubmit={handleSubmit}>
+        <label className="text-[18px]">Name</label>
+        <input type='text' required className="bg-white p-1 mb-2.5 rounded-lg" onChange={handleChange} placeholder="Display Name" value={displayName} name="displayName"/>
 
-        <label>E-mail</label>
-        <input type='email' required onChange={handleChange} value={email} name="email"/>
+        <label className="text-[18px]">E-mail</label>
+        <input type='email' required className="bg-white mb-2.5 p-1 rounded-lg" onChange={handleChange} placeholder="E-mail" value={email} name="email"/>
 
-        <label>Password</label>
-        <input type='password' required onChange={handleChange} value={password} name="password"/>
+        <label className="text-[18px]">Password</label>
+        <input type='password' required className="bg-white mb-2.5 p-1 rounded-lg" onChange={handleChange} placeholder="Password" value={password} name="password"/>
 
-        <label>Confirm Password</label>
-        <input type='password' required onChange={handleChange} value={confirmPassword} name="confirmPassword"/>
+        <label className="text-[18px]">Confirm Password</label>
+        <input type='password' required className="bg-white mb-4 p-1 rounded-lg" onChange={handleChange} placeholder="Confirm Password" value={confirmPassword} name="confirmPassword"/>
 
-        <button type='submit' className='cursor-pointer'>Register</button>
+        <button type='submit' className='cursor-pointer bg-black text-white p-3 rounded-xl'>Register</button>
       </form>
     </div>
   )
