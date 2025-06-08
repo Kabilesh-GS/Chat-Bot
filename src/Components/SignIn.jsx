@@ -1,6 +1,41 @@
 import GoogleIcon from '../assets/google.svg';
+import InputForm from './InputForm';
+import { signinWithEmailPass } from '../Utility/Firebase/Firebase.utils'
+import { useState } from 'react';
+
+const defaultForm = {
+  displayName:'',
+  email: '',
+  password: '',
+  confirmPassword: ''
+};
 
 function SignIn({signIn}) {
+
+  const[Form,setForm] = useState(defaultForm);
+  const {email, password } = Form;
+
+    const resetForm = () => {
+      setForm(defaultForm);
+    }
+    
+    const handleChange = (e) => {
+      const {name,value} = e.target;
+  
+      setForm({...Form,[name]: value});
+    }
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+  
+      try{
+        const response = await signinWithEmailPass(email,password);
+        resetForm();
+      }
+      catch(error){
+        console.log('user creation encountered an arror', error);
+      }
+    }
 
   return (
     <div className='flex flex-col items-center'>
@@ -14,13 +49,29 @@ function SignIn({signIn}) {
       <div className='flex justify-center items-center mt-4'>
         <div className='bg-black h-[2px] w-[110px] opacity-25 mr-3'></div><span>OR</span><div className='bg-black h-[2px] w-[110px] opacity-25 ml-3'></div>
       </div>
-      <form onSubmit={() => {}} className='flex flex-col mt-5 w-70'>
-        <lable className="text-[18px]">E-mail</lable>
-        <input type='email' className="bg-white mb-2.5 p-1 rounded-lg" placeholder='E-mail'/>
-        <lable className="text-[18px]">Password</lable>
-        <input type='password' className="bg-white mb-2.5 p-1 rounded-lg" placeholder='Password'/>
+      <form onSubmit={handleSubmit} className='flex flex-col mt-5 w-70'>
+        <InputForm label="Email" 
+          inputOptions={{
+            type: 'email',
+            required : true,
+            onChange: handleChange,
+            placeHolder : 'Email',
+            name: 'email',
+            value : email
+          }}
+        />
+        <InputForm label="Password" 
+          inputOptions={{
+            type: 'password',
+            required : true,
+            onChange: handleChange,
+            placeHolder : 'Password',
+            name: 'password',
+            value : password
+          }}
+        />
 
-        <button className='cursor-pointer bg-black text-white p-3 rounded-xl' type='submit'>SignIn</button>
+        <button className='cursor-pointer bg-black mt-8 text-white p-3 rounded-xl' type='submit'>SignIn</button>
       </form>
     </div>
   )

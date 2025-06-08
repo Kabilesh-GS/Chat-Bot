@@ -1,4 +1,5 @@
-import { useState } from "react";
+import InputForm from './InputForm';
+import { useState } from 'react';
 import { createUserWithEmail,createCollectionUsers } from '../Utility/Firebase/Firebase.utils'
 
 const defaultForm = {
@@ -12,6 +13,10 @@ function SignUp() {
 
   const[Form,setForm] = useState(defaultForm);
   const {displayName, email, password, confirmPassword } = Form;
+
+  const resetForm = () => {
+    setForm(defaultForm);
+  }
   
   const handleChange = (e) => {
     const {name,value} = e.target;
@@ -30,8 +35,8 @@ function SignUp() {
     try{
       const u = await createUserWithEmail(email,password);
       const users = u.user;
-
-      await createCollectionUsers(users, {displayName})
+      await createCollectionUsers(users, {displayName});
+      resetForm();
     }
     catch(error){
       console.log('user creation encountered an arror', error);
@@ -43,19 +48,48 @@ function SignUp() {
       <p>Don't have an account</p>
       <p>Register with your E-mail !</p>
       <form className='flex flex-col mt-5 w-70' onSubmit={handleSubmit}>
-        <label className="text-[18px]">Name</label>
-        <input type='text' required className="bg-white p-1 mb-2.5 rounded-lg" onChange={handleChange} placeholder="Display Name" value={displayName} name="displayName"/>
+        <InputForm label="Name" 
+          inputOptions={{
+            type: 'text',
+            required : true,
+            onChange : handleChange ,
+            value : displayName,
+            name: 'displayName',
+            placeHolder : 'Display Name'
+          }}
+        />
+        <InputForm label="E-mail" 
+          inputOptions={{
+            type: 'email',
+            required : true,
+            onChange : handleChange ,
+            value : email,
+            name: 'email',
+            placeHolder : 'E-mail'
+          }}
+        />
+        <InputForm label="Password" 
+          inputOptions={{
+            type: 'password',
+            required : true,
+            onChange : handleChange ,
+            value : password,
+            name: 'password',
+            placeHolder : 'Password'
+          }}
+        />
+        <InputForm label="Confirm Password" 
+          inputOptions={{
+            type: 'password',
+            required : true,
+            onChange : handleChange ,
+            value : confirmPassword,
+            name: 'confirmPassword',
+            placeHolder : 'Confirm Password'
+          }}
+        />
 
-        <label className="text-[18px]">E-mail</label>
-        <input type='email' required className="bg-white mb-2.5 p-1 rounded-lg" onChange={handleChange} placeholder="E-mail" value={email} name="email"/>
-
-        <label className="text-[18px]">Password</label>
-        <input type='password' required className="bg-white mb-2.5 p-1 rounded-lg" onChange={handleChange} placeholder="Password" value={password} name="password"/>
-
-        <label className="text-[18px]">Confirm Password</label>
-        <input type='password' required className="bg-white mb-4 p-1 rounded-lg" onChange={handleChange} placeholder="Confirm Password" value={confirmPassword} name="confirmPassword"/>
-
-        <button type='submit' className='cursor-pointer bg-black text-white p-3 rounded-xl'>Register</button>
+        <button type='submit' className='cursor-pointer bg-black mt-8 text-white p-3 rounded-xl'>Register</button>
       </form>
     </div>
   )
