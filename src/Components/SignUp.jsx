@@ -47,7 +47,7 @@ function SignUp() {
     <div className='flex flex-col items-center mt-5'>
       <p>Don't have an account</p>
       <p>Register with your E-mail !</p>
-      <form className='flex flex-col mt-5 w-70' onSubmit={handleSubmit}>
+      <form className='flex flex-col mt-0 w-70' onSubmit={handleSubmit}>
         <InputForm label="Name" 
           inputOptions={{
             type: 'text',
