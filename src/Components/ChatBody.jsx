@@ -1,17 +1,29 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Chatsty from './ChatBody.module.css'
 import { FaArrowCircleUp } from "react-icons/fa"
 import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
 import DefaultPrompt from './DefaultPrompt';
-import {Signout} from '../Utility/Firebase/Firebase.utils';;
+import {Signout,getUserDetails} from '../Utility/Firebase/Firebase.utils';
 import { MdOutlineLogin } from "react-icons/md";
+import { getAuth } from 'firebase/auth';
 
-function ChatBody({Username,ImageURL}) {
-
+function ChatBody({ImageURL}) {
   const [ourMsg,setourMsg] = useState("");
   const [final,setfinal] = useState("");
   const [ResponseMsg,setResponseMsg] = useState("");
+  const [userData,setUserData] = useState(null);
+
+  useEffect(() => {
+    const fetchDetails = async () => {
+      const user = getAuth().currentUser;
+      if (user) {
+        const data = await getUserDetails(user.uid);
+        setUserData(data);
+      }
+    };
+    fetchDetails();
+  },[])
   
   const handleGenerate = async () => {
     if (ourMsg.trim() === "") {
@@ -79,7 +91,7 @@ function ChatBody({Username,ImageURL}) {
       <button onClick={Signout} className='cursor-pointer hover:scale-120 active:scale-90 transition-all duration-100 left-[15px] w-[30px] absolute top-[15px]'><MdOutlineLogin className='text-[25px]' style={{color: '#81c784'}}/></button>
       <div className={Chatsty.body}>
         <div id='welcomeText' className={Chatsty.Welcome}>
-          <p className={Chatsty.welc}>Hello {Username}!</p>
+          <p className={Chatsty.welc}>Hello {userData?.displayName || '...'}!</p>
           <p className={Chatsty.welcQues}>How can I help you?</p>
           <div className={Chatsty.defatutprom}>
             {cardDis}
@@ -90,8 +102,7 @@ function ChatBody({Username,ImageURL}) {
         <div className="rounded-xl overflow-y-auto">
           {final && (
             <div className={Chatsty.sender}>
-              <ReactMarkdown className="text-md max-w-160 text-end text-emerald bg-white mt-3 px-4 p-1.5 mr-2 ml-auto rounded-lg whitespace-pre-wrap break-words">{final}</ReactMarkdown>
-              <img className='mt-3 mr-2' src={ImageURL} alt="User Avatar" />
+              <ReactMarkdown className="text-md max-w-160 text-end text-emerald bg-white mt-3 px-4 p-1.5 mr-5 ml-auto rounded-lg whitespace-pre-wrap break-words">{final}</ReactMarkdown>
             </div>
           )}
           {ResponseMsg && (

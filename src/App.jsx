@@ -8,8 +8,9 @@ import UserLogin from './Components/UserLogin';
 function App() {
   const[user] = useAuthState(auth);
   const signinFun = async () => {
-    const res = await Signin();
-    createCollectionUsers(res.user);
+    const {user} = await Signin();
+    createCollectionUsers(user);
+    console.log(user);
   }
   return (
     <div className='loginPageDiv'>

@@ -29,7 +29,7 @@ function SignIn({signIn}) {
       e.preventDefault();
   
       try{
-        const response = await signinWithEmailPass(email,password);
+        const {user} = await signinWithEmailPass(email,password);
         resetForm();
       }
       catch(error){

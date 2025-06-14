@@ -45,3 +45,16 @@ export const createCollectionUsers = async (userAuth,additionalInfo = {}) => {
     }
   }
 }
+export const getUserDetails = async (uid) => {
+  try{
+    const userDocRef = doc(db, 'users',uid);
+    const userSnap = await getDoc(userDocRef);
+
+    if(userSnap.exists()){
+      return userSnap.data();
+    }
+  }
+  catch(error){
+    alert("No data found");
+  }
+}
