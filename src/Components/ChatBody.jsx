@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import Chatsty from './ChatBody.module.css'
-import { FaArrowCircleUp } from "react-icons/fa"
 import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
+import Chatsty from './ChatBody.module.css'
 import DefaultPrompt from './DefaultPrompt';
-import {Signout,getUserDetails} from '../Utility/Firebase/Firebase.utils';
+import { FaArrowCircleUp } from "react-icons/fa"
 import { MdOutlineLogin } from "react-icons/md";
+import {Signout,getUserDetails} from '../Utility/Firebase/Firebase.utils';
 import { getAuth } from 'firebase/auth';
 
 function ChatBody({ImageURL}) {
@@ -67,38 +67,21 @@ function ChatBody({ImageURL}) {
     }
   };
 
-  const cardsData = [
-    {
-      prompt : "Write a code in java to sort an array with minimun time and space complexity",
-      emoji : "🧑‍💻",
-      onclick :  ()=>setourMsg("Write a code in java to sort an array with minimun time and space complexity")
-    },
-    {
-      prompt : "Explain about the concept of big-bang theory and how universe was created",
-      emoji : "🤯",
-      onclick :  ()=>setourMsg("Explain about the concept of big-bang theory and how universe was created")
-    },
-    {
-      prompt : "What is the difference between AI, ML, and Deep Learning?",
-      emoji : "🤖",
-      onclick :  ()=>setourMsg("What is the difference between AI, ML, and Deep Learning?")
-    },
-  ];
-  const cardDis = cardsData.map((cardsData,index) => { return <DefaultPrompt key={index} prompt={cardsData.prompt} emoji={cardsData.emoji} onclick={cardsData.onclick}/> })
-
   return (
     <div className={Chatsty.frame}>
       <button onClick={Signout} className='cursor-pointer hover:scale-120 active:scale-90 transition-all duration-100 left-[15px] w-[30px] absolute top-[15px]'><MdOutlineLogin className='text-[25px]' style={{color: '#81c784'}}/></button>
       <div className={Chatsty.body}>
+
         <div id='welcomeText' className={Chatsty.Welcome}>
           <p className={Chatsty.welc}>Hello {userData?.displayName || '...'}!</p>
           <p className={Chatsty.welcQues}>How can I help you?</p>
           <div className={Chatsty.defatutprom}>
-            {cardDis}
+            <DefaultPrompt />
           </div>
           &nbsp;
           <p className='text-red text-sm text-red-400' id='errormsg'></p>
         </div>
+
         <div className="rounded-xl overflow-y-auto">
           {final && (
             <div className={Chatsty.sender}>
@@ -111,6 +94,7 @@ function ChatBody({ImageURL}) {
             </div>
           )}
         </div>
+
         <div className={Chatsty.inputcont}>
           <textarea
             onKeyDown={handleKeyDown}
@@ -125,6 +109,7 @@ function ChatBody({ImageURL}) {
             onClick={handleGenerate}>
           <FaArrowCircleUp /></button>
         </div>
+
       </div>
     </div>
   )
