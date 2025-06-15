@@ -67,6 +67,10 @@ function ChatBody({ImageURL}) {
     }
   };
 
+  const handleClick = (prompt) => {
+    setourMsg(prompt);
+  }
+
   return (
     <div className={Chatsty.frame}>
       <button onClick={Signout} className='cursor-pointer hover:scale-120 active:scale-90 transition-all duration-100 left-[15px] w-[30px] absolute top-[15px]'><MdOutlineLogin className='text-[25px]' style={{color: '#81c784'}}/></button>
@@ -76,7 +80,7 @@ function ChatBody({ImageURL}) {
           <p className={Chatsty.welc}>Hello {userData?.displayName || '...'}!</p>
           <p className={Chatsty.welcQues}>How can I help you?</p>
           <div className={Chatsty.defatutprom}>
-            <DefaultPrompt />
+            <DefaultPrompt OnClick1={handleClick}/>
           </div>
           &nbsp;
           <p className='text-red text-sm text-red-400' id='errormsg'></p>
@@ -90,7 +94,7 @@ function ChatBody({ImageURL}) {
           )}
           {ResponseMsg && (
             <div className={Chatsty.ai}>
-              <ReactMarkdown className="text-lg min-w-auto max-w-250 text-start text-emerald bg-sky px-3 border-l-4 border-indigo rounded-lg break-words whitespace-pre-wrap ml-4 p-1.5 mt-3">{ResponseMsg}</ReactMarkdown> 
+              <ReactMarkdown className="text-lg min-w-auto max-w-230 text-start text-emerald bg-sky px-3 border-l-4 border-indigo rounded-lg break-words whitespace-pre-wrap ml-4 p-1.5 mt-3">{ResponseMsg}</ReactMarkdown> 
             </div>
           )}
         </div>
