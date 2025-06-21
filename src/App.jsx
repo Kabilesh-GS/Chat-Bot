@@ -14,8 +14,8 @@ function App() {
   }
   return (
     <div className='loginPageDiv'>
-      <Header />
-      {user ? <ChatBody Username={user.displayName} ImageURL={user.photoURL}/> : <UserLogin signIn={signinFun}/>}
+      <Header/>
+      {user ? <ChatBody ImageURL={user.photoURL}/> : <UserLogin signIn={signinFun}/>}
     </div>
   )
 }

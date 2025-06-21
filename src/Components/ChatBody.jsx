@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
 import Chatsty from './ChatBody.module.css'
 import DefaultPrompt from './DefaultPrompt';
-import { FaArrowCircleUp } from "react-icons/fa"
+import { BsArrowUpSquareFill } from "react-icons/bs";
 import { MdOutlineLogin } from "react-icons/md";
 import {Signout,getUserDetails} from '../Utility/Firebase/Firebase.utils';
 import { getAuth } from 'firebase/auth';
@@ -89,12 +89,12 @@ function ChatBody({ImageURL}) {
         <div className="rounded-xl overflow-y-auto">
           {final && (
             <div className={Chatsty.sender}>
-              <ReactMarkdown className="text-md max-w-160 text-end text-emerald bg-white mt-3 px-4 p-1.5 mr-5 ml-auto rounded-lg whitespace-pre-wrap break-words">{final}</ReactMarkdown>
+              <ReactMarkdown className="text-md max-w-160 text-end text-emerald bg-white mt-3 px-4 p-1.5 mr-5 ml-auto rounded-sm whitespace-pre-wrap break-words">{final}</ReactMarkdown>
             </div>
           )}
           {ResponseMsg && (
             <div className={Chatsty.ai}>
-              <ReactMarkdown className="text-lg min-w-auto max-w-230 text-start text-emerald bg-sky px-3 border-l-4 border-indigo rounded-lg break-words whitespace-pre-wrap ml-4 p-1.5 mt-3">{ResponseMsg}</ReactMarkdown> 
+              <ReactMarkdown className="text-lg min-w-auto max-w-230 text-start text-emerald bg-sky px-3 border-l-4 border-indigo rounded-sm break-words whitespace-pre-wrap ml-4 p-1.5 mt-3">{ResponseMsg}</ReactMarkdown> 
             </div>
           )}
         </div>
@@ -105,13 +105,13 @@ function ChatBody({ImageURL}) {
             value={ourMsg}
             placeholder='Ask anything'
             onChange={(e)=>setourMsg(e.target.value)}
-            className="bg-stone-700 mt-2 mb-2 pl-4 resize-none border-emerald placeholder-stone text-emerald text-lg rounded-full block w-170 h-13 p-2.5 focus:ring-none focus:ring-offset-0 bg-teal outline-none" 
+            className="bg-stone-700 mt-2 mb-2 pl-4 resize-none border-emerald placeholder-stone text-emerald text-lg rounded-sm block w-170 h-13 p-2.5 focus:ring-none focus:ring-offset-0 bg-teal outline-none" 
           />
           <button 
             type="button" 
             className={Chatsty.sendbtn} 
             onClick={handleGenerate}>
-          <FaArrowCircleUp /></button>
+          <BsArrowUpSquareFill /></button>
         </div>
 
       </div>

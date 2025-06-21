@@ -19,7 +19,7 @@ function DefaultPrompt({OnClick1}) {
 
     cardsData.map((cardsData,i)=> {
       return (
-        <div key={i} onClick={() => OnClick1(cardsData.prompt)} className="flex flex-col bg-white/32 sm:w-65 sm:h-50 text-start p-2 rounded-xl cursor-pointer" style={{display:"flex"}}>
+        <div key={i} onClick={() => OnClick1(cardsData.prompt)} className="flex flex-col bg-white/32 sm:w-65 sm:h-50 text-start p-2 rounded-sm cursor-pointer" style={{display:"flex"}}>
           <p className="text-[20px] p-2 sm:text-[25px]">{cardsData.emoji}</p>
           <p className="text-[15px] p-2 sm:text-[19px]">{cardsData.prompt}</p>
         </div>

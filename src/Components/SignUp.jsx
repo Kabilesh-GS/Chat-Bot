@@ -45,8 +45,8 @@ function SignUp() {
 
   return (
     <div className='flex flex-col items-center mt-5'>
-      <p>Don't have an account</p>
-      <p>Register with your E-mail !</p>
+      <p>Don't have an account,</p>
+      <p>Register with your E-mail!</p>
       <form className='flex flex-col mt-0 w-70' onSubmit={handleSubmit}>
         <InputForm label="Name" 
           inputOptions={{
@@ -55,7 +55,7 @@ function SignUp() {
             onChange : handleChange ,
             value : displayName,
             name: 'displayName',
-            placeHolder : 'Display Name'
+            placeholder : 'Display Name'
           }}
         />
         <InputForm label="E-mail" 
@@ -65,7 +65,7 @@ function SignUp() {
             onChange : handleChange ,
             value : email,
             name: 'email',
-            placeHolder : 'E-mail'
+            placeholder : 'E-mail'
           }}
         />
         <InputForm label="Password" 
@@ -75,7 +75,7 @@ function SignUp() {
             onChange : handleChange ,
             value : password,
             name: 'password',
-            placeHolder : 'Password'
+            placeholder : 'Password'
           }}
         />
         <InputForm label="Confirm Password" 
@@ -85,7 +85,7 @@ function SignUp() {
             onChange : handleChange ,
             value : confirmPassword,
             name: 'confirmPassword',
-            placeHolder : 'Confirm Password'
+            placeholder : 'Confirm Password'
           }}
         />
 

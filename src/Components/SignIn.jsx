@@ -49,14 +49,14 @@ function SignIn({signIn}) {
       <div className='flex justify-center items-center mt-4'>
         <div className='bg-black h-[2px] w-[110px] opacity-25 mr-3'></div><span>OR</span><div className='bg-black h-[2px] w-[110px] opacity-25 ml-3'></div>
       </div>
-      <p className='mt-5'>SignIn with your account</p>
+      <p className='mt-5'>SignIn with your E-mail</p>
       <form onSubmit={handleSubmit} className='flex flex-col mt-0 w-70'>
         <InputForm label="Email" 
           inputOptions={{
             type: 'email',
             required : true,
             onChange: handleChange,
-            placeHolder : 'Email',
+            placeholder : 'E-mail',
             name: 'email',
             value : email
           }}
@@ -66,7 +66,7 @@ function SignIn({signIn}) {
             type: 'password',
             required : true,
             onChange: handleChange,
-            placeHolder : 'Password',
+            placeholder : 'Password',
             name: 'password',
             value : password
           }}

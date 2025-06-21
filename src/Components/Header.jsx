@@ -1,4 +1,3 @@
-import React from 'react'
 import Headersty from './Header.module.css'
 
 function Header() {
