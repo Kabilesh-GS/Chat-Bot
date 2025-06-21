@@ -4,8 +4,7 @@ import axios from 'axios';
 import Chatsty from './ChatBody.module.css'
 import DefaultPrompt from './DefaultPrompt';
 import { BsArrowUpSquareFill } from "react-icons/bs";
-import { MdOutlineLogin } from "react-icons/md";
-import {Signout,getUserDetails} from '../Utility/Firebase/Firebase.utils';
+import {getUserDetails} from '../Utility/Firebase/Firebase.utils';
 import { getAuth } from 'firebase/auth';
 
 function ChatBody({ImageURL}) {
@@ -73,7 +72,6 @@ function ChatBody({ImageURL}) {
 
   return (
     <div className={Chatsty.frame}>
-      <button onClick={Signout} className='cursor-pointer hover:scale-120 active:scale-90 transition-all duration-100 left-[15px] w-[30px] absolute top-[15px]'><MdOutlineLogin className='text-[25px]' style={{color: '#81c784'}}/></button>
       <div className={Chatsty.body}>
 
         <div id='welcomeText' className={Chatsty.Welcome}>
