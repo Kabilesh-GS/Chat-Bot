@@ -1,5 +1,5 @@
 import {initializeApp} from 'firebase/app'
-import { getFirestore,doc,getDoc,setDoc } from 'firebase/firestore';
+import { getFirestore,doc,getDoc,setDoc, serverTimestamp, addDoc, collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { getAuth,signInWithPopup,GoogleAuthProvider,signOut,createUserWithEmailAndPassword,signInWithEmailAndPassword } from 'firebase/auth';
 const FirebaseApi = import.meta.env.VITE_FIREBASE_KEY;
 
@@ -58,4 +58,30 @@ export const getUserDetails = async (uid) => {
   catch(error){
     alert("No data found");
   }
+}
+
+export const sendMessage = async (userId,text,sender) => {
+  const messageRef = collection(db,'users',userId,'chats');
+
+  await addDoc(messageRef, {
+    text,
+    sender,
+    timestamp : serverTimestamp(),
+  })
+}
+
+export const listenMessage = (userId,callback) => {
+  const q = query(
+    collection(db,'users',userId,'chats'),
+    orderBy("timestamp", "asc")
+  );
+
+  const unsubscribe = onSnapshot(q, (snapshot) => {
+    const messages = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }))
+    callback(messages);
+  })
+  return unsubscribe;
 }

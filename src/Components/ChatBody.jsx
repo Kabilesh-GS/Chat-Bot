@@ -4,14 +4,27 @@ import axios from 'axios';
 import Chatsty from './ChatBody.module.css'
 import DefaultPrompt from './DefaultPrompt';
 import { BsArrowUpSquareFill } from "react-icons/bs";
-import {getUserDetails} from '../Utility/Firebase/Firebase.utils';
+import {getUserDetails,sendMessage,auth,listenMessage} from '../Utility/Firebase/Firebase.utils';
 import { getAuth } from 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 function ChatBody({ImageURL}) {
   const [ourMsg,setourMsg] = useState("");
-  const [final,setfinal] = useState("");
-  const [ResponseMsg,setResponseMsg] = useState("");
   const [userData,setUserData] = useState(null);
+  const [currentlyLogged] = useAuthState(auth);
+  const [messagesFromStore, setMessagesFromStore] = useState([]);
+
+  useEffect(() => {
+    if (!currentlyLogged?.uid) return;
+
+    const unsubscribe = listenMessage(currentlyLogged.uid, setMessagesFromStore);
+    return () => unsubscribe();
+  }, [currentlyLogged.uid]);
+
+  if(messagesFromStore.length != 0){ 
+    document.getElementById('welcomeText').innerHTML = "";
+    document.getElementById('welcomeText').style.marginTop = "0px";
+  }
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -32,14 +45,13 @@ function ChatBody({ImageURL}) {
       return;
     } 
 
-    setfinal(ourMsg);
     setourMsg("");
 
     try{
       document.getElementById('welcomeText').innerHTML = "";
       document.getElementById('welcomeText').style.marginTop = "0px";
 
-      setResponseMsg("Thinking...");
+      await sendMessage(currentlyLogged.uid,ourMsg,"user");
       const response = await axios({
         url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${import.meta.env.VITE_APP_API_KEY}`,
         method: "post",
@@ -47,11 +59,12 @@ function ChatBody({ImageURL}) {
           "contents": [{ "parts":[{"text": ourMsg}]}],
         }
       });
-      setResponseMsg(response.data.candidates[0].content.parts[0].text || 'No response received');
+      const resp = response.data.candidates[0].content.parts[0].text || 'No response received';
+      await sendMessage(currentlyLogged.uid,resp,"AI");
     }
     catch(error){
       console.error('Error : ', error);
-      setResponseMsg('Failed to get a response.');
+      await sendMessage(currentlyLogged.uid,"Error, Failed to get response!","AI");
     }
   };
 
@@ -82,19 +95,17 @@ function ChatBody({ImageURL}) {
           </div>
           &nbsp;
           <p className='text-red text-sm text-red-400' id='errormsg'></p>
+
         </div>
 
         <div className="rounded-xl overflow-y-auto">
-          {final && (
-            <div className={Chatsty.sender}>
-              <ReactMarkdown className="text-md max-w-160 text-end text-emerald bg-white mt-3 px-4 p-1.5 mr-5 ml-auto rounded-sm whitespace-pre-wrap break-words">{final}</ReactMarkdown>
+          {messagesFromStore.map((msg) => (
+            <div key={msg.id} className={msg.sender === "user" ? Chatsty.sender : Chatsty.ai}>
+              <ReactMarkdown className={`${msg.sender === "user" ? "text-md max-w-160 text-end text-emerald bg-white mt-3 px-4 p-1.5 mr-5 ml-auto rounded-sm whitespace-pre-wrap break-words" : "text-lg min-w-auto max-w-230 text-start text-emerald bg-sky px-3 border-l-4 border-indigo rounded-sm break-words whitespace-pre-wrap ml-4 p-1.5 mt-3" }`}>
+                {msg.text}
+              </ReactMarkdown>
             </div>
-          )}
-          {ResponseMsg && (
-            <div className={Chatsty.ai}>
-              <ReactMarkdown className="text-lg min-w-auto max-w-230 text-start text-emerald bg-sky px-3 border-l-4 border-indigo rounded-sm break-words whitespace-pre-wrap ml-4 p-1.5 mt-3">{ResponseMsg}</ReactMarkdown> 
-            </div>
-          )}
+          ))}
         </div>
 
         <div className={Chatsty.inputcont}>
