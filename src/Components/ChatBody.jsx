@@ -3,13 +3,8 @@ import ReactMarkdown from "react-markdown";
 import axios from "axios";
 import Chatsty from "./ChatBody.module.css";
 import DefaultPrompt from "./DefaultPrompt";
-import { BsArrowUpSquareFill } from "react-icons/bs";
-import {
-  getUserDetails,
-  sendMessage,
-  auth,
-  listenMessage,
-} from "../Utility/Firebase/Firebase.utils";
+import { BsArrowUpSquareFill, BsImage, BsChatText } from "react-icons/bs";
+import { getUserDetails,sendMessage,auth,listenMessage } from '../Utility/Firebase/Firebase.utils';
 import { getAuth } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -19,6 +14,7 @@ function ChatBody({ ImageURL }) {
   const [currentlyLogged] = useAuthState(auth);
   const [messagesFromStore, setMessagesFromStore] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [generationMode, setGenerationMode] = useState("text");
 
   useEffect(() => {
     if (!currentlyLogged?.uid) return;
@@ -57,34 +53,36 @@ function ChatBody({ ImageURL }) {
     }
 
     setourMsg("");
-    setIsLoading(true);
-    try {
-      document.getElementById("welcomeText").innerHTML = "";
-      document.getElementById("welcomeText").style.marginTop = "0px";
+    if(generationMode === "text"){
+      setIsLoading(true);
+      try {
+        document.getElementById("welcomeText").innerHTML = "";
+        document.getElementById("welcomeText").style.marginTop = "0px";
 
-      await sendMessage(currentlyLogged.uid, ourMsg, "user");
-      const response = await axios({
-        url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${
-          import.meta.env.VITE_APP_API_KEY
-        }`,
-        method: "post",
-        data: {
-          contents: [{ parts: [{ text: ourMsg }] }],
-        },
-      });
-      const resp =
-        response.data.candidates[0].content.parts[0].text ||
-        "No response received";
-      await sendMessage(currentlyLogged.uid, resp, "AI");
-    } catch (error) {
-      console.error("Error : ", error);
-      await sendMessage(
-        currentlyLogged.uid,
-        "Error, Failed to get response!",
-        "AI"
-      );
+        await sendMessage(currentlyLogged.uid, ourMsg, "user");
+        const response = await axios({
+          url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${
+            import.meta.env.VITE_APP_API_KEY
+          }`,
+          method: "post",
+          data: {
+            contents: [{ parts: [{ text: ourMsg }] }],
+          },
+        });
+        const resp =
+          response.data.candidates[0].content.parts[0].text ||
+          "No response received";
+        await sendMessage(currentlyLogged.uid, resp, "AI");
+      } 
+      catch(error){
+        console.error("Error : ", error);
+        await sendMessage(currentlyLogged.uid,"Error, Failed to get response!","AI");
+      }
+      setIsLoading(false);
+    } 
+    else if (generationMode === "image") {
+
     }
-    setIsLoading(false);
   };
 
   const handleKeyDown = (e) => {
@@ -138,34 +136,30 @@ function ChatBody({ ImageURL }) {
           ))}
           {isLoading && (
             <div className={Chatsty.ai}>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  padding: "8px 0",
-                }}
-              >
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "8px 0" }}>
                 <span className={Chatsty.loader} style={{ marginLeft: "15px" }}></span>
-                <span style={{ color: "black" }}>AI is thinking...</span>
+                <span style={{ color: "black" }}>{generationMode === "text" ? "AI is thinking..." : "Generating image..."}</span>
               </div>
             </div>
           )}
         </div>
 
         <div className={Chatsty.inputcont}>
-          <textarea
-            onKeyDown={handleKeyDown}
-            value={ourMsg}
-            placeholder="Ask anything"
-            onChange={(e) => setourMsg(e.target.value)}
-            className="bg-stone-700 mt-2 mb-2 pl-4 resize-none border-emerald placeholder-stone text-emerald text-lg rounded-sm block w-170 h-13 p-2.5 focus:ring-none focus:ring-offset-0 bg-teal outline-none"
+          <div className="flex gap-2 mr-2">
+            <button onClick={() => {setGenerationMode("text")}}
+              className={`${Chatsty.btnmode} ${generationMode === "text" ? Chatsty.btnActive : Chatsty.btnInactive}`}>
+              <span>
+                <BsChatText />
+              </span>
+            </button>
+            <button onClick={() => {setGenerationMode("image")}} className={`${Chatsty.btnmode} ${generationMode === "image" ? Chatsty.btnActive : Chatsty.btnInactive}`}>
+              <span><BsImage /></span>
+            </button>
+          </div>
+          <textarea onKeyDown={handleKeyDown} value={ourMsg} placeholder={generationMode === "text" ? "Ask anything!" : "What you want to generate?"} onChange={(e) => setourMsg(e.target.value)}
+            className="bg-stone-700 mt-2 mb-2 pl-4 resize-none border-emerald placeholder-stone text-emerald text-lg rounded-sm block w-160 h-13 p-2.5 focus:ring-none focus:ring-offset-0 bg-teal outline-none"
           />
-          <button
-            type="button"
-            className={Chatsty.sendbtn}
-            onClick={handleGenerate}
-          >
+          <button type="button" className={Chatsty.sendbtn} onClick={handleGenerate}>
             <BsArrowUpSquareFill />
           </button>
         </div>
