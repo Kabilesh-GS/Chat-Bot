@@ -6,6 +6,8 @@ import DefaultPrompt from "./DefaultPrompt";
 import { BsArrowUpSquareFill, BsImage, BsChatText } from "react-icons/bs";
 import { getUserDetails,sendMessage,auth,listenMessage } from '../Utility/Firebase/Firebase.utils';
 import { getAuth } from "firebase/auth";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from '../Utility/Firebase/Firebase.utils';
 import { useAuthState } from "react-firebase-hooks/auth";
 
 function ChatBody({ ImageURL }) {
@@ -102,8 +104,16 @@ function ChatBody({ ImageURL }) {
         const img = response.data.candidates[0].content.parts[1].inlineData.data;
         const imgFormat = response.data.candidates[0].content.parts[1].inlineData.mimeType;
 
-        const imageUrl = `data:${imgFormat};base64,${img}`;
-        await sendMessage(currentlyLogged.uid, `![Generated Image](${imageUrl})`, "AI");
+        const base64Response = await fetch(`data:${imgFormat};base64,${img}`);
+        const blob = await base64Response.blob();
+
+        const fileRef = ref(storage, `images/${currentlyLogged.uid}/${Date.now()}.png`);
+
+        await uploadBytes(fileRef, blob);
+
+        const downloadURL = await getDownloadURL(fileRef);
+
+        await sendMessage(currentlyLogged.uid, `![Generated Image](${downloadURL})`, "AI");
       } catch (error) {
         console.log("Error : ", error);
         await sendMessage(currentlyLogged.uid,"Error, Failed to get response!","AI");

@@ -1,4 +1,5 @@
 import {initializeApp} from 'firebase/app'
+import { getStorage } from 'firebase/storage';
 import { getFirestore,doc,getDoc,setDoc, serverTimestamp, addDoc, collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { getAuth,signInWithPopup,GoogleAuthProvider,signOut,createUserWithEmailAndPassword,signInWithEmailAndPassword } from 'firebase/auth';
 const FirebaseApi = import.meta.env.VITE_FIREBASE_KEY;
@@ -18,6 +19,7 @@ export const auth = getAuth(app);
 export const provider = new GoogleAuthProvider();
 export const Signin = () => signInWithPopup(auth,provider);
 export const Signout = () => signOut(auth);
+export const storage = getStorage(app);
 
 export const createUserWithEmail = async (email, password) => {
  return await createUserWithEmailAndPassword(auth,email,password)
