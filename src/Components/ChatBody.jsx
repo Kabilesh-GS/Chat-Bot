@@ -79,9 +79,36 @@ function ChatBody({ ImageURL }) {
         await sendMessage(currentlyLogged.uid,"Error, Failed to get response!","AI");
       }
       setIsLoading(false);
-    } 
-    else if (generationMode === "image") {
+    } else if (generationMode === "image") {
+      setIsLoading(true);
+      try {
+        document.getElementById("welcomeText").innerHTML = "";
+        document.getElementById("welcomeText").style.marginTop = "0px";
 
+        await sendMessage(currentlyLogged.uid, ourMsg, "user");
+        const response = await axios({
+          url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent?key=${
+            import.meta.env.VITE_APP_API_KEY
+          }`,
+          method: "post",
+          data: {
+            contents: [{ parts: [{ text: ourMsg }] }],
+            generationConfig: {
+              responseModalities: ["TEXT", "IMAGE"],
+            },
+          },
+        });
+
+        const img = response.data.candidates[0].content.parts[1].inlineData.data;
+        const imgFormat = response.data.candidates[0].content.parts[1].inlineData.mimeType;
+
+        const imageUrl = `data:${imgFormat};base64,${img}`;
+        await sendMessage(currentlyLogged.uid, `![Generated Image](${imageUrl})`, "AI");
+      } catch (error) {
+        console.log("Error : ", error);
+        await sendMessage(currentlyLogged.uid,"Error, Failed to get response!","AI");
+      }
+      setIsLoading(false);
     }
   };
 
@@ -156,7 +183,7 @@ function ChatBody({ ImageURL }) {
               <span><BsImage /></span>
             </button>
           </div>
-          <textarea onKeyDown={handleKeyDown} value={ourMsg} placeholder={generationMode === "text" ? "Ask anything!" : "What you want to generate?"} onChange={(e) => setourMsg(e.target.value)}
+          <textarea onKeyDown={handleKeyDown} value={ourMsg} placeholder={generationMode === "text" ? "Ask anything!" : "Generate image!"} onChange={(e) => setourMsg(e.target.value)}
             className="bg-stone-700 mt-2 mb-2 pl-4 resize-none border-emerald placeholder-stone text-emerald text-lg rounded-sm block w-160 h-13 p-2.5 focus:ring-none focus:ring-offset-0 bg-teal outline-none"
           />
           <button type="button" className={Chatsty.sendbtn} onClick={handleGenerate}>
