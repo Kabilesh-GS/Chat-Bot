@@ -60,21 +60,6 @@
   display: flex;
   flex-direction: row;
 }
-.btnmode {
-  background-color: #57534e;
-  color: #4ade80;
-  cursor: pointer;
-  padding: 17px 20px;
-  border-radius: 5px;
-}
-.btnActive {
-  background-color: #4ade80;
-  color: #57534e;
-}
-.btnInactive {
-  background-color: #57534e;
-  color: #4ade80;
-}
 @media only screen and (max-width: 600px) {
   .body {
     width: 100%;
@@ -162,7 +147,7 @@
     margin: 0px 60px;
   }
   .sendbtn {
-    right: 400px;
+    right: 460px;
     font-size: 35px;
   }
 }

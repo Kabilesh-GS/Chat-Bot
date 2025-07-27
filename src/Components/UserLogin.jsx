@@ -2,8 +2,7 @@ import { useState,useEffect } from 'react';
 import './SignIn.module.css';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
-import {Signin,auth,createCollectionUsers} from '../Utility/Firebase/Firebase.utils';
-import {useAuthState} from 'react-firebase-hooks/auth';
+import {Signin,createCollectionUsers} from '../Utility/Firebase/Firebase.utils';
   
 function UserLogin() {
 
@@ -18,7 +17,6 @@ function UserLogin() {
   }
 
   const[Active,setActive] = useState(true);
-  const[user] = useAuthState(auth);
   const signinFun = async () => {
     const res = await Signin();
     createCollectionUsers(res.user);

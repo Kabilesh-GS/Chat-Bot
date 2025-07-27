@@ -6,8 +6,6 @@ import DefaultPrompt from "./DefaultPrompt";
 import { BsArrowUpSquareFill, BsImage, BsChatText } from "react-icons/bs";
 import { getUserDetails,sendMessage,auth,listenMessage } from '../Utility/Firebase/Firebase.utils';
 import { getAuth } from "firebase/auth";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from '../Utility/Firebase/Firebase.utils';
 import { useAuthState } from "react-firebase-hooks/auth";
 
 function ChatBody({ ImageURL }) {
@@ -55,7 +53,6 @@ function ChatBody({ ImageURL }) {
     }
 
     setourMsg("");
-    if(generationMode === "text"){
       setIsLoading(true);
       try {
         document.getElementById("welcomeText").innerHTML = "";
@@ -80,46 +77,7 @@ function ChatBody({ ImageURL }) {
         console.error("Error : ", error);
         await sendMessage(currentlyLogged.uid,"Error, Failed to get response!","AI");
       }
-      setIsLoading(false);
-    } else if (generationMode === "image") {
-      setIsLoading(true);
-      try {
-        document.getElementById("welcomeText").innerHTML = "";
-        document.getElementById("welcomeText").style.marginTop = "0px";
-
-        await sendMessage(currentlyLogged.uid, ourMsg, "user");
-        const response = await axios({
-          url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent?key=${
-            import.meta.env.VITE_APP_API_KEY
-          }`,
-          method: "post",
-          data: {
-            contents: [{ parts: [{ text: ourMsg }] }],
-            generationConfig: {
-              responseModalities: ["TEXT", "IMAGE"],
-            },
-          },
-        });
-
-        const img = response.data.candidates[0].content.parts[1].inlineData.data;
-        const imgFormat = response.data.candidates[0].content.parts[1].inlineData.mimeType;
-
-        const base64Response = await fetch(`data:${imgFormat};base64,${img}`);
-        const blob = await base64Response.blob();
-
-        const fileRef = ref(storage, `images/${currentlyLogged.uid}/${Date.now()}.png`);
-
-        await uploadBytes(fileRef, blob);
-
-        const downloadURL = await getDownloadURL(fileRef);
-
-        await sendMessage(currentlyLogged.uid, `![Generated Image](${downloadURL})`, "AI");
-      } catch (error) {
-        console.log("Error : ", error);
-        await sendMessage(currentlyLogged.uid,"Error, Failed to get response!","AI");
-      }
-      setIsLoading(false);
-    }
+      setIsLoading(false);  
   };
 
   const handleKeyDown = (e) => {
@@ -182,17 +140,6 @@ function ChatBody({ ImageURL }) {
         </div>
 
         <div className={Chatsty.inputcont}>
-          <div className="flex gap-2 mr-2">
-            <button onClick={() => {setGenerationMode("text")}}
-              className={`${Chatsty.btnmode} ${generationMode === "text" ? Chatsty.btnActive : Chatsty.btnInactive}`}>
-              <span>
-                <BsChatText />
-              </span>
-            </button>
-            <button onClick={() => {setGenerationMode("image")}} className={`${Chatsty.btnmode} ${generationMode === "image" ? Chatsty.btnActive : Chatsty.btnInactive}`}>
-              <span><BsImage /></span>
-            </button>
-          </div>
           <textarea onKeyDown={handleKeyDown} value={ourMsg} placeholder={generationMode === "text" ? "Ask anything!" : "Generate image!"} onChange={(e) => setourMsg(e.target.value)}
             className="bg-stone-700 mt-2 mb-2 pl-4 resize-none border-emerald placeholder-stone text-emerald text-lg rounded-sm block w-160 h-13 p-2.5 focus:ring-none focus:ring-offset-0 bg-teal outline-none"
           />
